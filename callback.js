@@ -8,14 +8,14 @@ const main = async () => {
 
     if (!code || !codeVerifier || state !== storedState) {
         const error_message = "Erro de segurança ou código inválido."
-        window.location.href = `./error.html?error_message=${error_message}`
+        window.location.href = `${ORIGIN}/error.html?error_message=${error_message}`
     } else {
         try {
             const body = {
                 client_id: CLIENT_ID, // Exported from env.js
                 grant_type: 'authorization_code',
                 code: code,
-                redirect_uri: `${window.location.origin}/callback.html`,
+                redirect_uri: `${ORIGIN}/callback.html`,
                 code_verifier: codeVerifier
             }
 
@@ -31,11 +31,14 @@ const main = async () => {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
 
+            const data = await response.json()
+
+
             sessionStorage.setItem('access_token', data.access_token);
-            window.location.href = "./dashboard.html"
+            window.location.href = `${ORIGIN}/dashboard.html`
         } catch (error) {
             const error_message = `${error.message}`
-            window.location.href = `./error.html?error_message=${error_message}`
+            window.location.href = `${ORIGIN}/error.html?error_message=${error_message}`
         }
     }
 }

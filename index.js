@@ -37,7 +37,7 @@ loginButton.addEventListener("click", async () => {
     const params = new URLSearchParams({
         response_type: "code",
         client_id: CLIENT_ID, // Exported from env.js
-        redirect_uri: `${window.location.href}/callback.html`,
+        redirect_uri: `${ORIGIN}/callback.html`, // Exported from env.js
         state: state,
         code_challenge: codeChallenge,
         code_challenge_method: 'S256',

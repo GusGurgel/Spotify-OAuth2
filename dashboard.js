@@ -15,7 +15,7 @@ const main = async () => {
 
         logoffButton.addEventListener("click", () => {
             sessionStorage.clear()
-            window.location.href = `./`
+            window.location.href = `${ORIGIN}`
         })
 
         const updateAlbumData = async () => {
@@ -33,7 +33,7 @@ const main = async () => {
             }
 
 
-            let currentPlayingData = {} 
+            let currentPlayingData = {}
             try {
                 currentPlayingData = await response.json();
             } catch (error) { }
@@ -70,7 +70,7 @@ const main = async () => {
         }
 
         updateAlbumData()
-        const pollingInfoInterval = setInterval(updateAlbumData, 10000);
+        setInterval(updateAlbumData, 10000);
 
         // Load pause button
         if (role === "manager") {
@@ -126,7 +126,7 @@ const main = async () => {
         }
     } catch (error) {
         const error_message = `${error.message}`
-        window.location.href = `./error.html?error_message=${error_message}`
+        window.location.href = `${ORIGIN}/error.html?error_message=${error_message}`
     }
 }
 
