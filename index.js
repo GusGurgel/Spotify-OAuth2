@@ -1,5 +1,7 @@
 const loginButton = document.querySelector("#login-button")
 
+// code verifier is a high-entropy cryptographic random string with a length
+// between 43 and 128 characters 
 function generateRandomString(length) {
     const charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~';
     const randomValues = new Uint32Array(length);
@@ -7,11 +9,14 @@ function generateRandomString(length) {
     return Array.from(randomValues).map(n => charset[n % charset.length]).join('');
 }
 
+
 async function generateCodeChallenge(codeVerifier) {
+    // transform (hash) it using the SHA256 algorithm
     const encoder = new TextEncoder();
     const data = encoder.encode(codeVerifier);
     const digest = await window.crypto.subtle.digest('SHA-256', data);
 
+    // base64encode base64 representation of the digest
     return btoa(String.fromCharCode(...new Uint8Array(digest)))
         .replace(/\+/g, '-')
         .replace(/\//g, '_')
