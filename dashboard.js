@@ -70,7 +70,8 @@ const main = async () => {
         }
 
         updateAlbumData()
-        setInterval(updateAlbumData, 10000);
+        // Polling
+        setInterval(updateAlbumData, 5000);
 
         // Load pause button
         if (role === "manager") {
