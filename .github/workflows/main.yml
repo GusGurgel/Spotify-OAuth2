@@ -3,8 +3,8 @@ name: Deploy Static Site to GitHub Pages
 on:
   push:
     # Dispara o workflow sempre que houver um push para a branch 'main' (ou a branch principal do seu projeto)
-    branches: ["main"] 
-  
+    branches: ["main"]
+
   # Permite que você execute o workflow manualmente na aba 'Actions'
   workflow_dispatch:
 
@@ -31,19 +31,19 @@ jobs:
         # O valor do Secret (SPOTIFY_CLIENT_ID) é acessado via ${{ secrets.SPOTIFY_CLIENT_ID }}
         # e gravado no arquivo env.js.
         run: |
-          echo "const CLIENT_ID = \"${{ secrets.SPOTIFY_CLIENT_ID }}\"" > env.js
+          echo "const CLIENT_ID = \"${{ secrets.SPOTIFY_CLIENT_ID }}\"; const ORIGIN = \"${{ secrets.ORIGIN }}\";" > env.js
           echo "env.js created with secret content."
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
-      # Usa o 'upload-pages-artifact' para empacotar todos os arquivos 
+      # Usa o 'upload-pages-artifact' para empacotar todos os arquivos
       # e prepará-los para o deploy
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           # O diretório que contém seu site estático (o root do seu repo)
-          path: '.' 
+          path: "."
 
       - name: Deploy to GitHub Pages
         id: deployment
